@@ -1,0 +1,214 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "firstName": "Jean",
+      "lastName": "Dupont",
+      "dateOfBirth": "1985-06-15",
+      "startDate": "2018-03-12",
+      "address": {
+        "street": "23 Avenue des Lilas",
+        "city": "Lyon",
+        "state": "Rhône-Alpes",
+        "zipCode": "69003"
+      },
+      "department": "Marketing"
+    },
+    {
+      "id": 2,
+      "firstName": "Marie",
+      "lastName": "Laurent",
+      "dateOfBirth": "1990-11-28",
+      "startDate": "2019-07-05",
+      "address": {
+        "street": "8 Rue du Commerce",
+        "city": "Paris",
+        "state": "Île-de-France",
+        "zipCode": "75015"
+      },
+      "department": "Ressources Humaines"
+    },
+    {
+      "id": 3,
+      "firstName": "Thomas",
+      "lastName": "Martin",
+      "dateOfBirth": "1983-04-22",
+      "startDate": "2017-01-30",
+      "address": {
+        "street": "47 Rue des Écoles",
+        "city": "Bordeaux",
+        "state": "Nouvelle-Aquitaine",
+        "zipCode": "33000"
+      },
+      "department": "Engineering"
+    },
+    {
+      "id": 4,
+      "firstName": "Sophie",
+      "lastName": "Petit",
+      "dateOfBirth": "1992-08-17",
+      "startDate": "2020-02-14",
+      "address": {
+        "street": "15 Boulevard Victor Hugo",
+        "city": "Lille",
+        "state": "Hauts-de-France",
+        "zipCode": "59000"
+      },
+      "department": "Sales"
+    },
+    {
+      "id": 5,
+      "firstName": "Pierre",
+      "lastName": "Dubois",
+      "dateOfBirth": "1978-12-03",
+      "startDate": "2015-09-08",
+      "address": {
+        "street": "32 Avenue Foch",
+        "city": "Strasbourg",
+        "state": "Grand Est",
+        "zipCode": "67000"
+      },
+      "department": "Legal"
+    },
+    {
+      "id": 6,
+      "firstName": "Camille",
+      "lastName": "Moreau",
+      "dateOfBirth": "1988-03-21",
+      "startDate": "2016-11-15",
+      "address": {
+        "street": "7 Rue des Fleurs",
+        "city": "Nantes",
+        "state": "Pays de la Loire",
+        "zipCode": "44000"
+      },
+      "department": "Engineering"
+    },
+    {
+      "id": 7,
+      "firstName": "Alexandre",
+      "lastName": "Lefebvre",
+      "dateOfBirth": "1982-09-05",
+      "startDate": "2014-05-20",
+      "address": {
+        "street": "12 Rue Saint-Michel",
+        "city": "Toulouse",
+        "state": "Occitanie",
+        "zipCode": "31000"
+      },
+      "department": "Marketing"
+    },
+    {
+      "id": 8,
+      "firstName": "Julie",
+      "lastName": "Roux",
+      "dateOfBirth": "1991-07-14",
+      "startDate": "2020-10-01",
+      "address": {
+        "street": "19 Place Bellecour",
+        "city": "Lyon",
+        "state": "Rhône-Alpes",
+        "zipCode": "69002"
+      },
+      "department": "Sales"
+    },
+    {
+      "id": 9,
+      "firstName": "Nicolas",
+      "lastName": "Simon",
+      "dateOfBirth": "1975-02-18",
+      "startDate": "2013-08-09",
+      "address": {
+        "street": "28 Rue de la République",
+        "city": "Marseille",
+        "state": "Provence-Alpes-Côte d'Azur",
+        "zipCode": "13001"
+      },
+      "department": "Legal"
+    },
+    {
+      "id": 10,
+      "firstName": "Émilie",
+      "lastName": "Fournier",
+      "dateOfBirth": "1987-10-25",
+      "startDate": "2017-12-04",
+      "address": {
+        "street": "5 Rue Nationale",
+        "city": "Nice",
+        "state": "Provence-Alpes-Côte d'Azur",
+        "zipCode": "06000"
+      },
+      "department": "Ressources Humaines"
+    },
+    {
+      "id": 11,
+      "firstName": "Antoine",
+      "lastName": "Lemoine",
+      "dateOfBirth": "1980-05-12",
+      "startDate": "2016-02-18",
+      "address": {
+        "street": "9 Rue de la Liberté",
+        "city": "Montpellier",
+        "state": "Occitanie",
+        "zipCode": "34000"
+      },
+      "department": "Engineering"
+    },
+    {
+      "id": 12,
+      "firstName": "Céline",
+      "lastName": "Girard",
+      "dateOfBirth": "1993-01-08",
+      "startDate": "2021-05-27",
+      "address": {
+        "street": "14 Rue de la Gare",
+        "city": "Rennes",
+        "state": "Bretagne",
+        "zipCode": "35000"
+      },
+      "department": "Marketing"
+    },
+    {
+      "id": 13,
+      "firstName": "Lucas",
+      "lastName": "Caron",
+      "dateOfBirth": "1977-06-30",
+      "startDate": "2014-01-10",
+      "address": {
+        "street": "3 Rue des Champs",
+        "city": "Reims",
+        "state": "Grand Est",
+        "zipCode": "51100"
+      },
+      "department": "Sales"
+    },
+    {
+      "id": 14,
+      "firstName": "Chloé",
+      "lastName": "Leroy",
+      "dateOfBirth": "1989-04-19",
+      "startDate": "2015-06-23",
+      "address": {
+        "street": "18 Rue des Roses",
+        "city": "Toulon",
+        "state": "Provence-Alpes-Côte d'Azur",
+        "zipCode": "83000"
+      },
+      "department": "Legal"
+    },
+    {
+      "id": 15,
+      "firstName": "Mathieu",
+      "lastName": "Morel",
+      "dateOfBirth": "1984-08-07",
+      "startDate": "2018-01-02",
+      "address": {
+        "street": "21 Rue des Moulins",
+        "city": "Limoges",
+        "state": "Nouvelle-Aquitaine",
+        "zipCode": "87000"
+      },
+      "department": "Ressources Humaines"
+    }
+  ]
+}
