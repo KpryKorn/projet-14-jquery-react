@@ -1,6 +1,10 @@
 import { Link } from "react-router";
 import { useState } from "react";
 import { useEmployeeStore } from "../stores/useEmployeeStore";
+import { TableHeader } from "../components/data-table/TableHeader";
+import { TableRow } from "../components/data-table/TableRow";
+import { EntriesPerPageSelector } from "../components/data-table/PageEntries";
+import { Pagination } from "../components/data-table/Pagination";
 
 export default function EmployeeList() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -8,8 +12,30 @@ export default function EmployeeList() {
   const employees = useEmployeeStore((state) => state.employees);
   const [employeesPerPage, setEmployeesPerPage] = useState(10);
 
+  const [sortField, setSortField] = useState<string>("lastName");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleSort = (field: string) => {
+    if (field === sortField) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleEmployeesPerPageChange = (value: number) => {
+    setEmployeesPerPage(value);
     setCurrentPage(1);
   };
 
@@ -23,30 +49,49 @@ export default function EmployeeList() {
     );
   });
 
+  const sortedEmployees = [...filteredEmployees].sort((a, b) => {
+    let aValue, bValue;
+
+    switch (sortField) {
+      case "name":
+        aValue = `${a.lastName} ${a.firstName}`.toLowerCase();
+        bValue = `${b.lastName} ${b.firstName}`.toLowerCase();
+        break;
+      case "startDate":
+        aValue = a.startDate;
+        bValue = b.startDate;
+        break;
+      case "department":
+        aValue = a.department.toLowerCase();
+        bValue = b.department.toLowerCase();
+        break;
+      case "dateOfBirth":
+        aValue = a.dateOfBirth;
+        bValue = b.dateOfBirth;
+        break;
+      case "address":
+        aValue = `${a.address.city} ${a.address.state}`.toLowerCase();
+        bValue = `${b.address.city} ${b.address.state}`.toLowerCase();
+        break;
+      default:
+        aValue = a.lastName.toLowerCase();
+        bValue = b.lastName.toLowerCase();
+    }
+
+    if (sortDirection === "asc") {
+      return aValue > bValue ? 1 : -1;
+    } else {
+      return aValue < bValue ? 1 : -1;
+    }
+  });
+
   const indexOfLastEmployee = currentPage * employeesPerPage;
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-  const currentEmployees = filteredEmployees.slice(
+  const currentEmployees = sortedEmployees.slice(
     indexOfFirstEmployee,
     indexOfLastEmployee
   );
-  const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
-
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
+  const totalPages = Math.ceil(sortedEmployees.length / employeesPerPage);
 
   return (
     <>
@@ -77,53 +122,47 @@ export default function EmployeeList() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Start Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Department
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date of Birth
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Address
-                </th>
+                <TableHeader
+                  label="Name"
+                  field="name"
+                  sortField={sortField}
+                  sortDirection={sortDirection}
+                  onSort={handleSort}
+                />
+                <TableHeader
+                  label="Start Date"
+                  field="startDate"
+                  sortField={sortField}
+                  sortDirection={sortDirection}
+                  onSort={handleSort}
+                />
+                <TableHeader
+                  label="Department"
+                  field="department"
+                  sortField={sortField}
+                  sortDirection={sortDirection}
+                  onSort={handleSort}
+                />
+                <TableHeader
+                  label="Date of Birth"
+                  field="dateOfBirth"
+                  sortField={sortField}
+                  sortDirection={sortDirection}
+                  onSort={handleSort}
+                />
+                <TableHeader
+                  label="Address"
+                  field="address"
+                  sortField={sortField}
+                  sortDirection={sortDirection}
+                  onSort={handleSort}
+                />
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {currentEmployees.length > 0 ? (
+              {sortedEmployees.length > 0 ? (
                 currentEmployees.map((employee, idx) => (
-                  <tr key={idx} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {employee.firstName} {employee.lastName}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500">
-                        {employee.startDate}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                        {employee.department}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {employee.dateOfBirth}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
-                      <div>{employee.address.street}</div>
-                      <div>
-                        {employee.address.city}, {employee.address.state}{" "}
-                        {employee.address.zipCode}
-                      </div>
-                    </td>
-                  </tr>
+                  <TableRow key={idx} employee={employee} />
                 ))
               ) : (
                 <tr>
@@ -140,118 +179,19 @@ export default function EmployeeList() {
         </div>
 
         <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-          <div className="flex items-center text-sm text-gray-600">
-            <span className="mr-2">Show</span>
-            <select
-              className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-              value={employeesPerPage}
-              onChange={(e) => {
-                const newValue = parseInt(e.target.value);
-                setEmployeesPerPage(newValue);
-                setCurrentPage(1);
-              }}
-            >
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-              <option value={20}>20</option>
-            </select>
-            <span className="ml-2">entries</span>
-            <span className="ml-4">
-              (Showing{" "}
-              {currentEmployees.length > 0 ? indexOfFirstEmployee + 1 : 0} to{" "}
-              {Math.min(indexOfLastEmployee, filteredEmployees.length)} of{" "}
-              {filteredEmployees.length} total)
-            </span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={prevPage}
-              disabled={currentPage === 1}
-              className={`px-3 py-1 border border-gray-300 rounded ${
-                currentPage === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-50"
-              }`}
-            >
-              Previous
-            </button>
-
-            {totalPages <= 5 ? (
-              pageNumbers.map((number) => (
-                <button
-                  key={number}
-                  onClick={() => setCurrentPage(number)}
-                  className={`px-3 py-1 border border-gray-300 rounded ${
-                    currentPage === number
-                      ? "bg-blue-600 text-white"
-                      : "bg-white hover:bg-gray-50"
-                  }`}
-                >
-                  {number}
-                </button>
-              ))
-            ) : (
-              <>
-                {currentPage > 2 && (
-                  <button
-                    onClick={() => setCurrentPage(1)}
-                    className="px-3 py-1 border border-gray-300 rounded bg-white hover:bg-gray-50"
-                  >
-                    1
-                  </button>
-                )}
-
-                {currentPage > 3 && <span className="px-1">...</span>}
-
-                {currentPage > 1 && (
-                  <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    className="px-3 py-1 border border-gray-300 rounded bg-white hover:bg-gray-50"
-                  >
-                    {currentPage - 1}
-                  </button>
-                )}
-
-                <button className="px-3 py-1 border border-gray-300 rounded bg-blue-600 text-white">
-                  {currentPage}
-                </button>
-
-                {currentPage < totalPages && (
-                  <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    className="px-3 py-1 border border-gray-300 rounded bg-white hover:bg-gray-50"
-                  >
-                    {currentPage + 1}
-                  </button>
-                )}
-
-                {currentPage < totalPages - 2 && (
-                  <span className="px-1">...</span>
-                )}
-
-                {currentPage < totalPages - 1 && (
-                  <button
-                    onClick={() => setCurrentPage(totalPages)}
-                    className="px-3 py-1 border border-gray-300 rounded bg-white hover:bg-gray-50"
-                  >
-                    {totalPages}
-                  </button>
-                )}
-              </>
-            )}
-
-            <button
-              onClick={nextPage}
-              disabled={currentPage === totalPages || totalPages === 0}
-              className={`px-3 py-1 border border-gray-300 rounded ${
-                currentPage === totalPages || totalPages === 0
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-50"
-              }`}
-            >
-              Next
-            </button>
-          </div>
+          <EntriesPerPageSelector
+            employeesPerPage={employeesPerPage}
+            onEmployeesPerPageChange={handleEmployeesPerPageChange}
+            currentEmployees={currentEmployees}
+            indexOfFirstEmployee={indexOfFirstEmployee}
+            indexOfLastEmployee={indexOfLastEmployee}
+            filteredEmployeesLength={sortedEmployees.length}
+          />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </section>
     </>
