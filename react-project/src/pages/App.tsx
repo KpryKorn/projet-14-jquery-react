@@ -1,6 +1,36 @@
 import { Link } from "react-router";
+import { useEmployeeStore } from "../stores/useEmployeeStore";
+import data from "../../db/data.json";
 
 function App() {
+  const addEmployee = useEmployeeStore((state) => state.addEmployee);
+  const employees = useEmployeeStore((state) => state.employees);
+  console.log("State global de l'application:", employees);
+
+  const OPTIONS = data.regions;
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const data = new FormData(form);
+    const employee = {
+      firstName: data.get("first-name") as string,
+      lastName: data.get("last-name") as string,
+      dateOfBirth: data.get("date-of-birth") as string,
+      startDate: data.get("start-date") as string,
+      department: data.get("department") as string,
+      address: {
+        street: data.get("street") as string,
+        city: data.get("city") as string,
+        state: data.get("state") as string,
+        zipCode: data.get("zip-code") as string,
+      },
+    };
+
+    addEmployee(employee);
+    form.reset();
+    alert("Employee added successfully");
+  }
   return (
     <>
       <section className="container">
@@ -14,7 +44,11 @@ function App() {
           <h2 className="text-2xl font-semibold text-gray-700 mb-4">
             Create Employee
           </h2>
-          <form action="#" id="create-employee" className="space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            id="create-employee"
+            className="space-y-4"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
@@ -26,6 +60,7 @@ function App() {
                 <input
                   type="text"
                   id="first-name"
+                  name="first-name"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -40,6 +75,7 @@ function App() {
                 <input
                   type="text"
                   id="last-name"
+                  name="last-name"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -53,7 +89,8 @@ function App() {
                 </label>
                 <input
                   id="date-of-birth"
-                  type="text"
+                  name="date-of-birth"
+                  type="date"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -67,7 +104,8 @@ function App() {
                 </label>
                 <input
                   id="start-date"
-                  type="text"
+                  name="start-date"
+                  type="date"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -88,6 +126,7 @@ function App() {
                   </label>
                   <input
                     id="street"
+                    name="street"
                     type="text"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -102,6 +141,7 @@ function App() {
                   </label>
                   <input
                     id="city"
+                    name="city"
                     type="text"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -118,7 +158,13 @@ function App() {
                     name="state"
                     id="state"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ></select>
+                  >
+                    {OPTIONS.map((option, idx) => (
+                      <option key={idx} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
@@ -130,6 +176,7 @@ function App() {
                   </label>
                   <input
                     id="zip-code"
+                    name="zip-code"
                     type="number"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -156,11 +203,13 @@ function App() {
                 <option>Legal</option>
               </select>
             </div>
+            <button
+              className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300 cursor-pointer"
+              type="submit"
+            >
+              Save
+            </button>
           </form>
-
-          <button className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300">
-            Save
-          </button>
         </div>
       </section>
     </>

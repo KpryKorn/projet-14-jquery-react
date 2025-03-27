@@ -1,12 +1,12 @@
 import { Link } from "react-router";
 import { useState } from "react";
-import mockData from "../../db/data.json";
+import { useEmployeeStore } from "../stores/useEmployeeStore";
 
 export default function EmployeeList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const employees = mockData.employees;
-  const employeesPerPage = 10;
+  const employees = useEmployeeStore((state) => state.employees);
+  const [employeesPerPage, setEmployeesPerPage] = useState(10);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -96,8 +96,8 @@ export default function EmployeeList() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {currentEmployees.length > 0 ? (
-                currentEmployees.map((employee) => (
-                  <tr key={employee.id} className="hover:bg-gray-50">
+                currentEmployees.map((employee, idx) => (
+                  <tr key={idx} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
                         {employee.firstName} {employee.lastName}
@@ -140,10 +140,28 @@ export default function EmployeeList() {
         </div>
 
         <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-          <div>
-            Showing {currentEmployees.length > 0 ? indexOfFirstEmployee + 1 : 0}{" "}
-            to {Math.min(indexOfLastEmployee, filteredEmployees.length)} of{" "}
-            {filteredEmployees.length} entries
+          <div className="flex items-center text-sm text-gray-600">
+            <span className="mr-2">Show</span>
+            <select
+              className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              value={employeesPerPage}
+              onChange={(e) => {
+                const newValue = parseInt(e.target.value);
+                setEmployeesPerPage(newValue);
+                setCurrentPage(1);
+              }}
+            >
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+              <option value={20}>20</option>
+            </select>
+            <span className="ml-2">entries</span>
+            <span className="ml-4">
+              (Showing{" "}
+              {currentEmployees.length > 0 ? indexOfFirstEmployee + 1 : 0} to{" "}
+              {Math.min(indexOfLastEmployee, filteredEmployees.length)} of{" "}
+              {filteredEmployees.length} total)
+            </span>
           </div>
           <div className="flex items-center space-x-2">
             <button
