@@ -1,9 +1,11 @@
 export default function Select({
+  label,
   options,
   defaultValue,
   onChange,
   width = "w-full",
 }: {
+  label: string;
   options: { label: string; value: string }[];
   defaultValue?: number;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -11,8 +13,8 @@ export default function Select({
 }) {
   return (
     <select
-      name="state"
-      id="state"
+      name={label}
+      id={label}
       value={defaultValue}
       className={`px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${width}`}
       onChange={onChange}
