@@ -18,6 +18,7 @@ interface Employee {
 interface EmployeeState {
   employees: Employee[];
   addEmployee: (employee: Employee) => void;
+  removeEmployee: (employee: Employee) => void;
 }
 
 export const useEmployeeStore = create<EmployeeState>()(
@@ -26,6 +27,13 @@ export const useEmployeeStore = create<EmployeeState>()(
       employees: [],
       addEmployee: (employee) =>
         set((state) => ({ employees: [...state.employees, employee] })),
+      removeEmployee: (employee) => {
+        set((state) => ({
+          employees: state.employees.filter(
+            (e) => e.firstName !== employee.firstName
+          ),
+        }));
+      },
     }),
     {
       name: "employee-storage",

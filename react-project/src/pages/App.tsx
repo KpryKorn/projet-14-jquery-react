@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useEmployeeStore } from "../stores/useEmployeeStore";
 import data from "../../db/data.json";
 import Select from "../components/ui/Select";
+import DateSelector from "../components/ui/DateSelector";
 
 function App() {
   const addEmployee = useEmployeeStore((state) => state.addEmployee);
@@ -89,12 +90,7 @@ function App() {
                 >
                   Date of Birth
                 </label>
-                <input
-                  id="date-of-birth"
-                  name="date-of-birth"
-                  type="date"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <DateSelector label="date-of-birth" />
               </div>
 
               <div>
@@ -104,12 +100,7 @@ function App() {
                 >
                   Start Date
                 </label>
-                <input
-                  id="start-date"
-                  name="start-date"
-                  type="date"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <DateSelector label="start-date" />
               </div>
             </div>
 
