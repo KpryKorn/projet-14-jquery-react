@@ -1,3 +1,5 @@
+import Select from "../ui/Select";
+
 export const EntriesPerPageSelector = ({
   employeesPerPage,
   onEmployeesPerPageChange,
@@ -13,18 +15,20 @@ export const EntriesPerPageSelector = ({
   indexOfLastEmployee: number;
   filteredEmployeesLength: number;
 }) => {
+  const options = [
+    { label: "10", value: "10" },
+    { label: "15", value: "15" },
+    { label: "20", value: "20" },
+  ];
   return (
     <div className="flex items-center text-sm text-gray-600">
       <span className="mr-2">Show</span>
-      <select
-        className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-        value={employeesPerPage}
+      <Select
+        options={options}
+        defaultValue={employeesPerPage}
         onChange={(e) => onEmployeesPerPageChange(parseInt(e.target.value))}
-      >
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-        <option value={20}>20</option>
-      </select>
+        width="w-auto"
+      />
       <span className="ml-2">entries</span>
       <span className="ml-4">
         (Showing {currentEmployees.length > 0 ? indexOfFirstEmployee + 1 : 0} to{" "}

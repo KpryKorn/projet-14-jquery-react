@@ -1,13 +1,15 @@
 import { Link } from "react-router";
 import { useEmployeeStore } from "../stores/useEmployeeStore";
 import data from "../../db/data.json";
+import Select from "../components/ui/Select";
 
 function App() {
   const addEmployee = useEmployeeStore((state) => state.addEmployee);
   const employees = useEmployeeStore((state) => state.employees);
   console.log("State global de l'application:", employees);
 
-  const OPTIONS = data.regions;
+  const REGIONS = data.regions;
+  const DEPARTMENTS = data.departments;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -154,17 +156,7 @@ function App() {
                   >
                     State
                   </label>
-                  <select
-                    name="state"
-                    id="state"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    {OPTIONS.map((option, idx) => (
-                      <option key={idx} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+                  <Select options={REGIONS} />
                 </div>
 
                 <div>
@@ -191,17 +183,7 @@ function App() {
               >
                 Department
               </label>
-              <select
-                name="department"
-                id="department"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option>Sales</option>
-                <option>Marketing</option>
-                <option>Engineering</option>
-                <option>Human Resources</option>
-                <option>Legal</option>
-              </select>
+              <Select options={DEPARTMENTS} />
             </div>
             <button
               className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300 cursor-pointer"
