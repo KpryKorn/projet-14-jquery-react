@@ -3,8 +3,19 @@ import { useEmployeeStore } from "../stores/useEmployeeStore";
 import data from "../../db/data.json";
 import Select from "../components/ui/Select";
 import DateSelector from "../components/ui/DateSelector";
+import { useState } from "react";
+import { Modal } from "../components/ui/Modale";
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const addEmployee = useEmployeeStore((state) => state.addEmployee);
   const employees = useEmployeeStore((state) => state.employees);
   console.log("State global de l'application:", employees);
@@ -32,7 +43,7 @@ function App() {
 
     addEmployee(employee);
     form.reset();
-    alert("Employee added successfully");
+    openModal();
   }
   return (
     <>
@@ -147,7 +158,7 @@ function App() {
                   >
                     State
                   </label>
-                  <Select options={REGIONS} />
+                  <Select label="state" options={REGIONS} />
                 </div>
 
                 <div>
@@ -174,7 +185,7 @@ function App() {
               >
                 Department
               </label>
-              <Select options={DEPARTMENTS} />
+              <Select label="department" options={DEPARTMENTS} />
             </div>
             <button
               className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300 cursor-pointer"
@@ -184,6 +195,14 @@ function App() {
             </button>
           </form>
         </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          title="Employee has been added"
+        >
+          <p>Employee added succesfully.</p>
+        </Modal>
       </section>
     </>
   );
