@@ -4,7 +4,7 @@ import data from "../../db/data.json";
 import Select from "../components/ui/Select";
 import DateSelector from "../components/ui/DateSelector";
 import { useState } from "react";
-import { Modal } from "../components/ui/Modale";
+import { Modal } from "projet-14-modal";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
