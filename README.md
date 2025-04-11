@@ -24,6 +24,14 @@ cd react-project
 npm install
 ```
 
+## Lien du repo NPM du composant Modal
+
+https://www.npmjs.com/package/projet-14-modal
+
+## Lien du repo GitHub du composant Modal
+
+https://github.com/KpryKorn/projet-14-modal
+
 ## Démarrage
 
 ```bash
