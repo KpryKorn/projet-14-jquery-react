@@ -21,6 +21,8 @@ export default function EmployeeList() {
   };
 
   const handleSort = (field: string) => {
+    if (!field) return;
+
     if (field === sortField) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
