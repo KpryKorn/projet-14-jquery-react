@@ -8,6 +8,15 @@ import { Modal } from "projet-14-modal";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dobValue, setDobValue] = useState<string | null>(null);
+  const [startDateValue, setStartDateValue] = useState<string | null>(null);
+
+  const handleDobChange = (value: string) => {
+    setDobValue(value);
+  };
+  const handleStartDateChange = (value: string) => {
+    setStartDateValue(value);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -30,8 +39,8 @@ function App() {
     const employee = {
       firstName: data.get("first-name") as string,
       lastName: data.get("last-name") as string,
-      dateOfBirth: data.get("date-of-birth") as string,
-      startDate: data.get("start-date") as string,
+      dateOfBirth: dobValue as string,
+      startDate: startDateValue as string,
       department: data.get("department") as string,
       address: {
         street: data.get("street") as string,
@@ -40,6 +49,17 @@ function App() {
         zipCode: data.get("zip-code") as string,
       },
     };
+
+    if (dobValue) {
+      const birthDate = new Date(dobValue);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+
+      if (age < 18) {
+        alert("Employee must be at least 18 years old.");
+        return;
+      }
+    }
 
     addEmployee(employee);
     form.reset();
@@ -103,7 +123,11 @@ function App() {
                 >
                   Date of Birth
                 </label>
-                <DateSelector label="date-of-birth" />
+                <DateSelector
+                  value={dobValue}
+                  onChange={handleDobChange}
+                  label="date-of-birth"
+                />
               </div>
 
               <div>
@@ -113,7 +137,11 @@ function App() {
                 >
                   Start Date
                 </label>
-                <DateSelector label="start-date" />
+                <DateSelector
+                  value={startDateValue}
+                  onChange={handleStartDateChange}
+                  label="start-date"
+                />
               </div>
             </div>
 
