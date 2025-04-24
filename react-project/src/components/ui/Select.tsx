@@ -5,7 +5,7 @@ export default function Select({
   onChange,
   width = "w-full",
 }: {
-  label: string;
+  label?: string;
   options: { label: string; value: string }[];
   defaultValue?: number;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;

@@ -24,6 +24,7 @@ export const EntriesPerPageSelector = ({
     <div className="flex items-center text-sm text-gray-600">
       <span className="mr-2">Show</span>
       <Select
+        label="entries-per-page"
         options={options}
         defaultValue={employeesPerPage}
         onChange={(e) => onEmployeesPerPageChange(parseInt(e.target.value))}
