@@ -75,6 +75,7 @@ function App() {
                   type="text"
                   id="first-name"
                   name="first-name"
+                  required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -90,6 +91,7 @@ function App() {
                   type="text"
                   id="last-name"
                   name="last-name"
+                  required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -132,6 +134,7 @@ function App() {
                     id="street"
                     name="street"
                     type="text"
+                    required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -147,6 +150,7 @@ function App() {
                     id="city"
                     name="city"
                     type="text"
+                    required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -172,6 +176,7 @@ function App() {
                     id="zip-code"
                     name="zip-code"
                     type="number"
+                    required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
